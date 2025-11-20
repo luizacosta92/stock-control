@@ -24,7 +24,7 @@ Não usaremos branches paralelas ou fork — tudo será feito diretamente aqui.
 
 ### 1. Clone o repositório
 ```bash
-git clone <URL-DO-REPOSITORIO>
+git clone https://github.com/luizacosta92/stock-control.git 
 ````
 
 ### 2. Entre na pasta do projeto
