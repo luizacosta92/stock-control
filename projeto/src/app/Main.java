@@ -1,7 +1,14 @@
 package app;
 
+import view.ProdutoView;
+
+import javax.swing.*;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello, World!");
+        SwingUtilities.invokeLater(() -> {
+            ProdutoView tela = new ProdutoView();
+            tela.setVisible(true);
+        });
     }
 }

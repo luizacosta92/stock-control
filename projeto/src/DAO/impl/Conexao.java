@@ -1,34 +1,38 @@
 package DAO.impl;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class Conexao {
 
-    private static Conexao conexao;
-    private Connection connection;
-    private Conexao(){
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/estoque", "root", "root");
-        } catch (ClassNotFoundException exception) {
-            JOptionPane.showMessageDialog(null, "Banco de dados não localizado");
-        } catch (SQLException sqlException) {
-            JOptionPane.showMessageDialog(null, "Erro ao conectar banco de dados");
-            sqlException.printStackTrace();
-        }
-    }
+    private static Conexao instance;
 
-    public static Conexao getInstance(){
-        if (conexao == null){
-            conexao = new Conexao();
+    private Conexao() { }
+
+    public static Conexao getInstance() {
+        if (instance == null) {
+            instance = new Conexao();
         }
-        return conexao;
+        return instance;
     }
 
     public Connection getConnection() {
-        return connection;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            String url = "jdbc:mysql://localhost:3306/estoque"
+                    + "?useSSL=false"
+                    + "&useTimezone=true"
+                    + "&serverTimezone=UTC"
+                    + "&allowPublicKeyRetrieval=true";
+
+            String user = "root";           // seu usuário
+            String password = "SENHA";  // sua senha
+
+            return DriverManager.getConnection(url, user, password);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao conectar ao banco: " + e.getMessage(), e);
+        }
     }
 }
